@@ -222,6 +222,7 @@
             justify-content: center;
             color: #999;
             font-size: 3rem;
+            cursor: pointer;
         }
 
         .video-container iframe,
@@ -511,14 +512,10 @@
             <!-- Jogo 1 -->
             <div class="project-card">
                 <div class="video-container">
-                    🎬
-                    <!-- Substitua pelo seu vídeo:
-                    <iframe src="https://www.youtube.com/embed/SEU_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-                    ou
-                    <video controls>
-                        <source src="seu-video.mp4" type="video/mp4">
+                    <video id="game-video-1" muted loop preload="metadata">
+                        <source src="clip-1.mp4" type="video/mp4">
+                        Seu navegador não suporta vídeos.
                     </video>
-                    -->
                 </div>
                 <div class="project-info">
                     <h3>Nome do Jogo 1</h3>
@@ -572,5 +569,43 @@
     <footer>
         <p>&copy; 2025 Bruno Dev. Feito com ❤️ e muitos bugs corrigidos.</p>
     </footer>
+
+    <script>
+        // Controle de vídeo ao passar o mouse e ao clicar
+        const gameVideo1 = document.getElementById('game-video-1');
+        const videoContainer1 = gameVideo1.parentElement;
+        let isManuallyPlaying = false;
+
+        // Hover - reproduz automaticamente
+        videoContainer1.addEventListener('mouseenter', () => {
+            if (!isManuallyPlaying) {
+                gameVideo1.play();
+            }
+        });
+
+        // Sair do hover - pausa apenas se não foi clicado
+        videoContainer1.addEventListener('mouseleave', () => {
+            if (!isManuallyPlaying) {
+                gameVideo1.pause();
+                gameVideo1.currentTime = 0;
+            }
+        });
+
+        // Clique - controla play/pause manual
+        gameVideo1.addEventListener('click', () => {
+            if (gameVideo1.paused) {
+                gameVideo1.play();
+                isManuallyPlaying = true;
+            } else {
+                gameVideo1.pause();
+                isManuallyPlaying = false;
+            }
+        });
+
+        // Quando o vídeo terminar (se não estiver em loop)
+        gameVideo1.addEventListener('ended', () => {
+            isManuallyPlaying = false;
+        });
+    </script>
 </body>
 </html>
