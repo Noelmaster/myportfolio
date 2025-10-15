@@ -233,6 +233,43 @@
             height: 100%;
         }
 
+        /* Animação de troca de imagens no hover */
+        .image-hover-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            background: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .image-hover-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        .image-hover-container .image-2 {
+            opacity: 0;
+        }
+
+        .image-hover-container:hover .image-1 {
+            animation: fadeInOut 2s infinite;
+        }
+
+        .image-hover-container:hover .image-2 {
+            animation: fadeInOut 2s infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
         .project-info {
             padding: 30px;
         }
@@ -412,22 +449,16 @@
         <div class="container">
             <h2 class="section-title">Meus Projetos 3D</h2>
             <div class="portfolio-grid">
-                <!-- Projeto 3D 1 -->
+                <!-- Projeto 3D 1  -->
                 <div class="project-card">
-                    <div class="video-container">
-                        🎬
-                        <!-- Substitua pelo seu vídeo:
-                        <iframe src="https://www.youtube.com/embed/SEU_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-                        ou
-                        <video controls>
-                            <source src="seu-video.mp4" type="video/mp4">
-                        </video>
-                        -->
+                    <div class="image-hover-container">
+                        <img src="https://drive.google.com/uc?export=view&id=1IEBf4g4jBtjnX0oP_5tL0TECzwqvKBMT" class="image-1" alt="Projeto 3D - Vista 1">
+                        <img src="https://drive.google.com/uc?export=view&id=12DezhL2fhqUqVcUrfV-4XObqW2blKHST" class="image-2" alt="Projeto 3D - Vista 2">
                     </div>
                     <div class="project-info">
                         <h3>Nome do Projeto 3D 1</h3>
                         <p>
-                            Descrição do seu projeto de modelagem 3D. Explique o conceito, técnicas utilizadas e o que torna este trabalho especial.
+                             Modelagem 3D de uma lembrança feita no Blender e exportada em stl. Imprimi o objeto na minha propria impressora 3d de resina usando o chitubox.
                         </p>
                         <div class="tech-tags">
                             <span class="tag">Blender</span>
