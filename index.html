@@ -241,6 +241,7 @@
             height: 0;
             background: #e0e0e0;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .image-container img {
@@ -252,6 +253,11 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container:hover img {
+            transform: translate(-50%, -50%) scale(1.05);
         }
 
         /* Animação de troca de imagens no hover */
@@ -261,6 +267,7 @@
             height: 0;
             background: #e0e0e0;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .image-hover-container img {
@@ -291,6 +298,65 @@
         @keyframes fadeInOut {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
+        }
+
+        /* Modal de Imagem */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #667eea;
+            transform: rotate(90deg);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .project-info {
@@ -400,6 +466,17 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            .modal-close {
+                top: 20px;
+                right: 20px;
+                font-size: 40px;
+            }
+
+            .modal-content {
+                max-width: 95%;
+                max-height: 80%;
+            }
         }
     </style>
 </head>
@@ -474,7 +551,7 @@
             <div class="portfolio-grid">
                 <!-- Projeto 3D 1 - COM ANIMAÇÃO -->
                 <div class="project-card">
-                    <div class="image-hover-container">
+                    <div class="image-hover-container" onclick="openImageModal(this)">
                         <img src="imagens/projeto3d-1.jpeg" class="image-1" alt="Projeto 3D - Vista 1">
                         <img src="imagens/projeto3d-2.jpg" class="image-2" alt="Projeto 3D - Vista 2">
                     </div>
@@ -492,7 +569,7 @@
 
                 <!-- Projeto 3D 2 - COM IMAGEM -->
                 <div class="project-card">
-                    <div class="image-container">
+                    <div class="image-container" onclick="openImageModal(this)">
                         <img src="imagens/projeto3d2-1.jpg" alt="Projeto 3D 2">
                     </div>
                     <div class="project-info">
@@ -592,6 +669,12 @@
         <p>&copy; 2025 Bruno Dev. Feito com ❤️ e muitos bugs corrigidos.</p>
     </footer>
 
+    <!-- Modal de Imagem -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage" alt="Imagem ampliada">
+    </div>
+
     <script>
         // Controle de vídeo ao passar o mouse e ao clicar
         const gameVideo1 = document.getElementById('game-video-1');
@@ -627,6 +710,36 @@
         // Quando o vídeo terminar (se não estiver em loop)
         gameVideo1.addEventListener('ended', () => {
             isManuallyPlaying = false;
+        });
+
+        // Funções do Modal de Imagem
+        function openImageModal(element) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            // Pega a primeira imagem do container (image-1 ou a única imagem)
+            const img = element.querySelector('img');
+            
+            modal.classList.add('active');
+            modalImg.src = img.src;
+            
+            // Previne o scroll do body quando o modal está aberto
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            
+            // Restaura o scroll do body
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fecha o modal com a tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
         });
     </script>
 </body>
